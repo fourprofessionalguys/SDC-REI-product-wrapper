@@ -8,6 +8,7 @@ import fs from 'fs';
 import bodyParser from 'body-parser';
 import { renderToString } from 'react-dom/server';
 import App from '../shared/components/app.jsx';
+import React from 'react';
 
 // SETUP
 //
@@ -52,7 +53,7 @@ app.get('/', (req, res) => {
   fs.readFile(path.join(__dirname, 'templateIndex.html'), 'utf-8', (err, html) => {
     if (err) console.log(err)
     else {
-      const html = html.replace(`<div id="root">product-wrapper</div>`, `<div id="root">${component}</ div>`);
+      html = html.replace('<div id="root">product-wrapper</div>', `<div id="root">${component}</div>`);
       res.send(html);
     }
   });

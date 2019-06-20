@@ -26,3 +26,7 @@ unsplashApiKey.js
 
 # new relic
 newrelic_agent.log
+
+# bundles
+main.bundle.*
+server.bundle.*
