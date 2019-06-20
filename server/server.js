@@ -5,7 +5,7 @@ import express from 'express';
 import path from 'path';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import renderPage from '../iso-middleware/render.js';
+import { renderPage, renderApp } from '../iso-middleware/render.js';
 
 // SETUP
 //
@@ -54,7 +54,13 @@ if (process.env.ROUTES === 'redis') {
 
 // LOAD HYDRATED INDEX
 //
+app.get('/proxy', (req, res) => {
+  res.send(renderApp());
+});
+
 app.get('*', renderPage);
+
+
 
 
 // LAUNCH

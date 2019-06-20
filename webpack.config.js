@@ -57,6 +57,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin(),
     new DynamicCdnWebpackPlugin(),
-    new MinifyPlugin()
+    new MinifyPlugin(),
+    new compress()
   ]
 };
