@@ -9,12 +9,13 @@
   },
   "scripts": {
     "start": "node ./server/run.js",
-    "start-dev": "nodemon ./server/run.js",
+    "start-dev": "nodemon ./server/server.bundle.js",
     "seed-postgres": "./db/sql/seedPostgres.sh 2000000",
     "seed-redis": "./db/redis/seedRedis.sh",
     "test": "jest --config jest-preset.js",
     "build:prod": "./node_modules/.bin/webpack --mode production",
-    "build:dev": "./node_modules/.bin/webpack --mode development; rm build/index.html;"
+    "build:dev": "./node_modules/.bin/webpack --mode development; rm build/index.html;",
+    "build:css": "node-sass --include-path scss shared/main.scss shared/main.css"
   },
   "dependencies": {
     "babel-preset-env": "^1.7.0",
@@ -32,6 +33,7 @@
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "redis": "^2.8.0",
+    "styled-components": "^4.3.1",
     "underscore": "^1.9.1"
   },
   "devDependencies": {

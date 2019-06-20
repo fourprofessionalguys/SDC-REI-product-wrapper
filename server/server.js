@@ -4,8 +4,10 @@ require('dotenv').config();
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
+import fs from 'fs';
 import bodyParser from 'body-parser';
-import renderPage from '../iso-middleware/render.js';
+import { renderToString } from 'react-dom/server';
+import App from '../shared/components/app.jsx';
 
 // SETUP
 //
@@ -20,11 +22,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-// SERVE
-//
+// // SERVE
+// //
 const buildPath = path.join(__dirname, '../', 'build');
-app.use('/', express.static(buildPath));
+app.use(express.static(buildPath));
 app.use(express.static(__dirname));
+
 
 // LOAD GZIP BUNDLE
 //
@@ -34,38 +37,33 @@ app.get('*.js', function (req, res, next) {
   next();
 });
 
-// DATABASE ROUTES
+
+// ROUTES
 //
-if (process.env.ROUTES === 'redis') {
+const postgres = require('./postgresRoutes.js');
 
-  const redis = require('./redisRoutes.js');
+app.use(postgres.images);
 
-  app.get('/images', redis.images);
-  app.get('/products', redis.products);
+app.use(postgres.products);
 
-} else if (process.env.ROUTES === 'postgres') {
+app.get('/', (req, res) => {
+  const component = renderToString(<App images={res.locals.images} activeImage={res.locals.activeImage} product={res.locals.products} />);
 
-  const postgres = require('./postgresRoutes.js');
-
-  app.get('/images', postgres.images);
-  app.get('/products', postgres.products);
-
-}
-
-// LOAD HYDRATED INDEX
-//
-app.get('*', renderPage);
-
-
-// LAUNCH
-//
-app.listen(port, (err) => {
-  if (err) {
-    return console.log(err);
-  }
-  return console.log(`listening on port ${port}`);
+  fs.readFile(path.join(__dirname, 'templateIndex.html'), 'utf-8', (err, html) => {
+    if (err) console.log(err)
+    else {
+      const html = html.replace(`<div id="root">product-wrapper</div>`, `<div id="root">${component}</ div>`);
+      res.send(html);
+    }
+  });
 });
 
 
-
-module.exports = app;
+// SERVE
+//
+app.listen(port, (err) => {
+if (err) {
+return console.log(err);
+    }
+  return console.log(`listening on port ${ port }`);
+});

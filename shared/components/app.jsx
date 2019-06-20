@@ -1,41 +1,44 @@
 import React from 'react';
-import MediaWrapper from './media-wrapper';
-import Checkout from './checkout';
-import Spinner from './spinner';
+import MediaWrapper from './media-wrapper.jsx';
+import Checkout from './checkout.jsx';
+import Spinner from './spinner.jsx';
 
 class App extends React.Component {
-  static fetchImages() {
-    return fetch(`http://${window.location.hostname}:3001/images`)
-      .then(res => res.json())
-      .then(data => data)
-      .catch(err => err);
-  }
+  // static fetchImages() {
+  //   return fetch(`http://${window.location.hostname}:3001/images`)
+  //     .then(res => res.json())
+  //     .then(data => data)
+  //     .catch(err => err);
+  // }
 
-  static fetchProducts() {
-    return fetch(`http://${window.location.hostname}:3001/products`)
-      .then(res => res.json())
-      .then(data => data.row)
-      .catch(err => err);
-  }
+  // static fetchProducts() {
+  //   return fetch(`http://${window.location.hostname}:3001/products`)
+  //     .then(res => res.json())
+  //     .then(data => data.row)
+  //     .catch(err => err);
+  // }
 
   constructor(props) {
     super(props);
+    let { images, activeImage, product } = this.props;
+    console.log('images component', product, '\n\n\n\n\n------------------');
     this.state = {
-      images: [],
-      activeImage: undefined, // {},
+      images: images,
+      activeImage: activeImage, // {},
       carouselPosition: 0,
       activeColor: 'flame',
-      product: {
-        productName: '',
-        companyName: '',
-        itemNumber: 0,
-        color: '',
-        price: '80.00',
-        rating: '5',
-        noRatings: 0,
-        shoeSizes: [],
-        activeColor: 'flame',
-      },
+      product: product,
+      // product: {
+      //   productName: '',
+      //   companyName: '',
+      //   itemNumber: 0,
+      //   color: '',
+      //   price: '80.00',
+      //   rating: '5',
+      //   noRatings: 0,
+      //   shoeSizes: [],
+      //   activeColor: 'flame',
+      // },
       mousePosition: {
         x: 0,
         y: 0,
@@ -47,6 +50,7 @@ class App extends React.Component {
       shippingOption: 'ship',
       hover: false,
     };
+
     this.handleImageClick = this.handleImageClick.bind(this);
     this.handleCarouselPos = this.handleCarouselPos.bind(this);
     this.handleZoom = this.handleZoom.bind(this);
@@ -58,29 +62,29 @@ class App extends React.Component {
     this.updateHover = this.updateHover.bind(this);
   }
 
-  componentDidMount() {
-    // The set timeout simulates real-world loading times so the spinner can do its things.
-    // To get rid of the spinner, change 1500 to 0
-    App.fetchImages()
-      .then(data => data.rows.map((item, i) => {
-        item.id = i + 1;
-        return item;
-      }))
-      .then(data => this.setState({
-        images: data,
-        activeImage: data.find(img => img.size === 'full' && img.color === 'flame'),
-      }, () => {
-        console.log(this.state);
-      }));
+  // componentDidMount() {
+  //   // The set timeout simulates real-world loading times so the spinner can do its things.
+  //   // To get rid of the spinner, change 1500 to 0
+  //   App.fetchImages()
+  //     .then(data => data.rows.map((item, i) => {
+  //       item.id = i + 1;
+  //       return item;
+  //     }))
+  //     .then(data => this.setState({
+  //       images: data,
+  //       activeImage: data.find(img => img.size === 'full' && img.color === 'flame'),
+  //     }, () => {
+  //       console.log(this.state);
+  //     }));
 
-    App.fetchProducts()
-      .then(data => this.setState({ product: data }))
-      .then(() => {
-        const { product } = this.state;
-        document.title = product.productName;
-        console.log(this.state);
-      });
-  }
+  //   App.fetchProducts()
+  //     .then(data => this.setState({ product: data }))
+  //     .then(() => {
+  //       const { product } = this.state;
+  //       document.title = product.productName;
+  //       console.log(this.state);
+  //     });
+  // }
 
   handleCarouselPos(e) {
     const { carouselPosition } = this.state;
@@ -195,13 +199,13 @@ class App extends React.Component {
       handleZoom: this.handleZoom,
       updateHover: this.updateHover,
     };
-    if (activeImage === undefined) {
-      return (
-        <div id="product-wrapper">
-          <Spinner />
-        </div>
-      );
-    }
+    // if (activeImage === undefined) {
+    //   return (
+    //     <div id="product-wrapper">
+    //       <Spinner />
+    //     </div>
+    //   );
+    // }
     return (
       <div id="product-wrapper">
         <MediaWrapper

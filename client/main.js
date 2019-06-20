@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../shared/components/app.jsx';
-import style from '../shared/main.scss';
+// import { renderHtml } from '../iso-middleware/render.js';
 
-
-const renderHydrate = Component => {
+const renderHydrate = (Component) => {
   ReactDOM.hydrate(
     <Component />,
     document.getElementById('root')
@@ -12,3 +11,12 @@ const renderHydrate = Component => {
 };
 
 renderHydrate(App);
+
+// const renderHydrate = (element) => {
+//   ReactDOM.hydrate(
+//     React.createElement(element),
+//     document.getElementById('root')
+//   );
+// };
+
+// renderHtml().then(html => renderHydrate(html));

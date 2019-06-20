@@ -1,12 +1,10 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import Html from '../shared/components/Html.jsx';
 import App from '../shared/components/app.jsx';
 
-const renderPage = function (req, res) {
-  const app = renderToString(<App />);
-  const html = renderToString(<Html body={app} />);
-  return res.send(`<!DOCTYPE html>${html}`);
+const renderPage = (images, activeImage, product) => {
+  return renderToString(<App images={images} activeImage={activeImage} product={product} />);
 };
+
 
 export default renderPage;

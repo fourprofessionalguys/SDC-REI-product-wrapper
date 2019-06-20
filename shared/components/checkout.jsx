@@ -1,38 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ProductInfo from './checkoutSubComponents/productInfo';
-import ColorSelect from './checkoutSubComponents/colorSelect';
-import ShoeSizeSelect from './checkoutSubComponents/shoeSizeSelect';
-import CheckoutQuantity from './checkoutSubComponents/checkoutQuantity';
-import ShippingOptions from './checkoutSubComponents/shippingOptions';
-import BuyButtons from './checkoutSubComponents/buyButtons';
+import ProductInfo from './checkoutSubComponents/productInfo.jsx';
+import ColorSelect from './checkoutSubComponents/colorSelect.jsx';
+import ShoeSizeSelect from './checkoutSubComponents/shoeSizeSelect.jsx';
+import CheckoutQuantity from './checkoutSubComponents/checkoutQuantity.jsx';
+import ShippingOptions from './checkoutSubComponents/shippingOptions.jsx';
+import BuyButtons from './checkoutSubComponents/buyButtons.jsx';
 
 const Checkout = ({
   handlers, product, quantity, shippingOption, activeColor, images,
 }) => (
-  <div className="checkout-wrapper">
-    <ProductInfo {...product} />
-    <ColorSelect
-      color={activeColor}
-      images={images}
-      handler={handlers.handleColorSelect}
-    />
-    <div className="user-selection-row">
-      <ShoeSizeSelect
-        shoeSizes={product.shoeSizes}
-        handler={handlers.shoeSizeSelect}
+    <div className="checkout-wrapper">
+      <ProductInfo {...product} />
+      <ColorSelect
+        color={activeColor}
+        images={images}
+        handler={handlers.handleColorSelect}
       />
-      <CheckoutQuantity
-        click={handlers.handleQuantityClick}
-        input={handlers.handleQuantityInput}
-        quantity={quantity}
-      />
+      <div className="user-selection-row">
+        <ShoeSizeSelect
+          shoeSizes={product.shoeSizes}
+          handler={handlers.shoeSizeSelect}
+        />
+        <CheckoutQuantity
+          click={handlers.handleQuantityClick}
+          input={handlers.handleQuantityInput}
+          quantity={quantity}
+        />
+      </div>
+      <hr />
+      <ShippingOptions handler={handlers.handleShippingInput} option={shippingOption} />
+      <BuyButtons />
     </div>
-    <hr />
-    <ShippingOptions handler={handlers.handleShippingInput} option={shippingOption} />
-    <BuyButtons />
-  </div>
-);
+  );
 
 Checkout.propTypes = {
   product: PropTypes.shape({
@@ -72,11 +72,11 @@ Checkout.defaultProps = {
   },
   activeColor: 'flame',
   handlers: {
-    shoeSizeSelect: () => {},
-    handleQuantityClick: () => {},
-    handleQuantityInput: () => {},
-    handleShippingInput: () => {},
-    handleColorSelect: () => {},
+    shoeSizeSelect: () => { },
+    handleQuantityClick: () => { },
+    handleQuantityInput: () => { },
+    handleShippingInput: () => { },
+    handleColorSelect: () => { },
   },
   quantity: 1,
   shippingOption: 'ship',
