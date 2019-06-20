@@ -3,9 +3,10 @@
 require('dotenv').config();
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { renderPage, renderApp } from '../iso-middleware/render.js';
+import { renderPage, renderHtml } from '../iso-middleware/render.js';
 
 // SETUP
 //
@@ -54,8 +55,11 @@ if (process.env.ROUTES === 'redis') {
 
 // LOAD HYDRATED INDEX
 //
-app.get('/proxy', (req, res) => {
-  res.send(renderApp());
+app.get('/proxy', async (req, res) => {
+  await fs.writeFile(path.join(__dirname, 'index.html'), renderHtml(), 'utf-8');
+  fs.readFile(path.join(__dirname, 'index.html'), 'utf8', (err, html) => {
+    res.sendFile(html);
+  })
 });
 
 app.get('*', renderPage);

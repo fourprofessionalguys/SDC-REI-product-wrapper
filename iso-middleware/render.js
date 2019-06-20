@@ -3,14 +3,14 @@ import { renderToString } from 'react-dom/server';
 import Html from '../shared/components/Html.jsx';
 import App from '../shared/components/app.jsx';
 
-const renderApp = function () {
-  return renderToString(<App />);
+const renderHtml = function () {
+  const app = renderToString(<App />);
+  return renderToString(<Html body={app} />);
 };
 
 const renderPage = function (req, res) {
-  const app = renderApp();
-  const html = renderToString(<Html body={app} />);
+  const html = renderHtml();
   return res.send(`<!DOCTYPE html>${html}`);
 };
 
-export default { renderPage, renderApp };
+export default { renderPage, renderHtml };
