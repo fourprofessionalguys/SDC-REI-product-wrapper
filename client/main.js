@@ -1,22 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from '../shared/components/app.jsx';
-// import { renderHtml } from '../iso-middleware/render.js';
+import renderPage from '../iso-middleware/render.js';
 
-const renderHydrate = (Component) => {
+
+const renderHydrate = (element) => {
   ReactDOM.hydrate(
-    <Component />,
-    document.getElementById('root')
+    // React.createElement('<!DOCTYPE html>'),
+    React.createElement(element)
   );
 };
 
-renderHydrate(App);
-
-// const renderHydrate = (element) => {
-//   ReactDOM.hydrate(
-//     React.createElement(element),
-//     document.getElementById('root')
-//   );
-// };
-
-// renderHtml().then(html => renderHydrate(html));
+renderPage(html => renderHydrate(html));

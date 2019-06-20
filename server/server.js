@@ -6,9 +6,8 @@ import path from 'path';
 import cors from 'cors';
 import fs from 'fs';
 import bodyParser from 'body-parser';
-import { renderToString } from 'react-dom/server';
-import App from '../shared/components/app.jsx';
-import React from 'react';
+import renderPage from '../iso-middleware/render.js';
+
 
 // SETUP
 //
@@ -41,22 +40,8 @@ app.get('*.js', function (req, res, next) {
 
 // ROUTES
 //
-const postgres = require('./postgresRoutes.js');
-
-app.use(postgres.images);
-
-app.use(postgres.products);
-
 app.get('/', (req, res) => {
-  const component = renderToString(<App images={res.locals.images} activeImage={res.locals.activeImage} product={res.locals.products} />);
-
-  fs.readFile(path.join(__dirname, 'templateIndex.html'), 'utf-8', (err, html) => {
-    if (err) console.log(err)
-    else {
-      html = html.replace('<div id="root">product-wrapper</div>', `<div id="root">${component}</div>`);
-      res.send(html);
-    }
-  });
+  renderPage(html => res.send(html));
 });
 
 
