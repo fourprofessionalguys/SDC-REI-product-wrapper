@@ -18,9 +18,6 @@ node_modules/
 # 1000 images for S3 bucket
 images/
 
-# API Keys
-unsplashApiKey.js
-
 # EC2 Files
 *.pem
 
@@ -29,4 +26,3 @@ newrelic_agent.log
 
 # bundles
 main.bundle.*
-server.bundle.*

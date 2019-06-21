@@ -1,14 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../shared/components/app.jsx';
-import style from '../shared/main.scss';
 
 
-const renderHydrate = Component => {
-  ReactDOM.hydrate(
-    <Component />,
-    document.getElementById('root')
-  );
-};
+const initialData = JSON.parse(document.getElementById('initial-data').getAttribute('data-json'));
 
-renderHydrate(App);
+ReactDOM.hydrate(<App {...initialData} />, document.getElementById('app'));
